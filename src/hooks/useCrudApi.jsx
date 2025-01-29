@@ -2,7 +2,7 @@ import axios from "axios"
 import { useState } from "react"
 
 function useCrudApi() {
-  const [data, setData] = useState(null)
+  const [data, setData] = useState([])
   const [pending, setPending] = useState(false)
   const [error, setError] = useState(null)
 
@@ -18,10 +18,7 @@ function useCrudApi() {
       })
       switch (method) {
         case 'POST':
-          setData((prev) => ({
-            ...prev,
-            results: [...prev.results, res.data]
-          }))
+          setData((prev) => [...prev, res.data])
 
           break
         case 'PUT':
@@ -32,10 +29,10 @@ function useCrudApi() {
           setData((prev) => prev.filter(item => item.id !== id))
           break
         default:
-          setData(res.data)
+          setData(res.data.results)
       }
 
-      setData(res.data)
+
     } catch (error) {
       setError(error.message)
     } finally {
