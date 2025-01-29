@@ -123,6 +123,8 @@ function App() {
               <input className='input' type="text" name="image_url" value={values.image_url} onChange={(e) => handleChange(e.target)} />
             </label>
           </div>
+
+
           <br />
           <button className='button' type="submit">{edit ? 'Edit' : 'Create'}</button>
         </form>
@@ -134,29 +136,34 @@ function App() {
         {pending ? <p>Loading...</p> :
           <div className='card'>
             <ul>
-              {data && data.results && data.results.map(user => (
+              {data && data.map(user => (
                 <li key={user.id}>
                   <div className='mt-10 flex flex-col items-center grid-cols-2 gap-4 w-full'>
                     <div className=" bg-white p-4 rounded-lg shadow-lg border border-gray-300 w-64">
-                      {/* Imagen de perfil */}
-                      <img
-                        className="w-32 h-32 rounded-full object-cover mb-4"
-                        src={user.image_url ? user.image_url : 'https://picsum.photos/200/300'}
-                        alt={user.first_name}
-                      />
 
-                      {/* Información del usuario */}
+                      <div className='bg-white flex justify-center' >
+                        <img
+                          className="w-32 h-32  p-2 rounded-full border border-gray-500 object-cover mb-4"
+                          src={user.image_url ? user.image_url : 'https://picsum.photos/200/300'}
+                          alt={user.first_name}
+                        />
+                      </div>
+
+
+
                       <p className="bg-white border border-gray-400 text-black p-2 rounded-lg mb-2">First Name: {user.first_name}</p>
                       <p className="bg-white border border-gray-400 text-black p-2 rounded-lg mb-2">Last Name: {user.last_name}</p>
                       <p className="bg-white border border-gray-400 text-black p-2 rounded-lg mb-2">Email: {user.email}</p>
                       <p className="bg-white border border-gray-400 text-black p-2 rounded-lg mb-2">Birthday: {user.birthday}</p>
 
+                      <div className='flex gap-2'>
+                        <button className='button'
+                          onClick={() => handleEdit(user)}>Edit</button>
+                        <br />
+                        <button className='button'
+                          onClick={() => remove(user.id)}>Delete</button>
+                      </div>
 
-                      <button className='button'
-                        onClick={() => handleEdit(user)}>Edit</button>
-                      <br />
-                      <button className='button'
-                        onClick={() => remove(user.id)}>Delete</button>
 
                     </div>
 
@@ -174,7 +181,7 @@ function App() {
 
       </div>
 
-    </div>
+    </div >
 
 
   )
